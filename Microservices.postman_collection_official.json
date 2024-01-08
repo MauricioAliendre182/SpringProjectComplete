@@ -1,0 +1,121 @@
+{
+	"info": {
+		"_postman_id": "f3deea4f-7a0c-4707-b6d7-d21c2f6b5a48",
+		"name": "Microservices",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "19057090"
+	},
+	"item": [
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "List all Products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8079/api/product"
+					},
+					"response": []
+				},
+				{
+					"name": "Add product",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"sku\": \"000003\",\r\n    \"name\": \"PC normal 2\",\r\n    \"description\": \"Best PC in the market\",\r\n    \"price\": 2500,\r\n    \"status\":true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8079/api/product"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Inventory",
+			"item": [
+				{
+					"name": "Is in stock",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8079/api/inventory/000003"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Orders",
+			"item": [
+				{
+					"name": "Place Order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"orderItems\": [\r\n        {\r\n            \"sku\": \"000001\",\r\n            \"price\": 3215,\r\n            \"quantity\": 3\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8079/api/order"
+					},
+					"response": []
+				},
+				{
+					"name": "List orders",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8079/api/order"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "oauth2",
+		"oauth2": {
+			"clientId": "microservices_client",
+			"redirect_uri": "http://localhost:8079/login/oauth2/code/keycloak",
+			"clientSecret": "k5Mcbg9rNlM9zWzOSDIi8lrZ96GUx2Kb",
+			"scope": "openid",
+			"accessTokenUrl": "http://localhost:8181/realms/microservices-realm/protocol/openid-connect/token",
+			"authUrl": "http://localhost:8181/realms/microservices-realm/protocol/openid-connect/auth",
+			"tokenName": "kc_token",
+			"addTokenTo": "header"
+		}
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

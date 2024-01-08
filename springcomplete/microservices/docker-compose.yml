@@ -1,0 +1,86 @@
+version: "4.16.3"
+services:
+  ### Postgres database for inventory
+  db-inventory:
+    container_name: db-inventory
+    image: postgres:latest
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ms_inventory
+      POSTGRES_USER: maps182
+      POSTGRES_HOST: 0.0.0.0
+      POSTGRES_PASSWORD: Test123
+    ports:
+      - 5431:5431
+    expose:
+      - 5431
+    command: -p 5431
+
+  ### MySQL database for orders
+#  db-orders:
+#    container_name: db-orders
+#    image: mysql:8.0.33
+#    restart: unless-stopped
+#    environment:
+#      MYSQL_DATABASE: ms_orders
+#      MYSQL_USER: maps182
+#      MYSQL_PASSWORD: Test123
+#      MYSQL_ROOT_PASSWORD: root
+#    ports:
+#      - 3306:3306
+#    expose:
+#      - 3306
+
+  ### Postgres database for products
+  db-products:
+    container_name: db-products
+    image: postgres:latest
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ms_products
+      POSTGRES_USER: maps182
+      POSTGRES_HOST: 0.0.0.0
+      POSTGRES_PASSWORD: Test123
+    ports:
+      - 5433:5433
+    expose:
+      - 5433
+    command: -p 5433
+
+  ### Postgre database for Keyclock
+  db-keycloak:
+    container_name: db-keycloak
+    image: postgres:latest
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: db_keycloak
+      POSTGRES_USER: maps182
+      POSTGRES_HOST: 0.0.0.0
+      POSTGRES_PASSWORD: Test123
+    ports:
+      - 5434:5434
+    expose:
+      - 5434
+    command: -p 5434
+
+### Keycloak
+  keycloak:
+    container_name: keycloak
+    image: quay.io/keycloak/keycloak:21.0.2
+    command: ["start-dev"]
+    ports:
+      - 8181:8181
+    expose:
+      - 8181
+    depends_on:
+      - db-keycloak
+    environment:
+      DB_VENDOR: POSTGRES
+      DB_ADDR: db-keycloak
+      DB_DATABASE: db_keycloak
+      DB_PORT: 5434
+      DB_USER: maps182
+      DB_PASSWORD: Test123
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_HTTP_PORT: 8181
